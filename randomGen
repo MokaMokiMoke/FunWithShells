@@ -1,0 +1,7 @@
+echo $(($RANDOM % 100)) >> a.log
+echo ", " >>a.log
+echo $(($RANDOM % 100 * -1)) >>a.log
+echo ", " >>a.log
+
+done
+
