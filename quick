@@ -1,0 +1,177 @@
+# Nagios neu starten                                                                                                                        
+sudo /etc/init.d/nagios3 restart                                                                                                            
+                                                                                                                                            
+# Nagios Passwort Zurücksetzten                                                                                                             
+sudo htpasswd -c -b /etc/nagios3/htpasswd.users nagiosadmin nagiosadmin                                                                     
+                                                                                                                                            
+# Nagios Host-Service-Configs                                                                                                               
+/etc/nagios3/conf.d                                                                                                                         
+                                                                                                                                            
+# ARP Netzwerk Scan                                                                                                                         
+arp-scan --interface=eth0 192.168.178.0/24                                                                                                  
+                                                                                                                                            
+# Zeichenketten ersetzten - String Replacement                                                                                              
+sed -i -- s/fritz.box/Philipps-iPad/g philipps-ipad.cfg                                                                                     
+                                                                                                                                            
+# Mirror two directories with rsync                                                                                                         
+sudo rsync -rtvu --delete /etc/nagios3/ /home/pi/.backup/nagios3/                                                                           
+                                                                                                                                            
+# Delte not empty directory                                                                                                                 
+rm -rf conf.d/ chmod --reference services.cfg servicegroups.cfg                                                                             
+                                                                                                                                            
+# Full backup with tar                                                                                                                      
+tar -cvpf /backups/fullbackup.tar --directory=/ --exclude=proc --exclude=sys --exclude=dev/pts                                              
+--exclude=backups --exclude=mnt                                                                                                             
+                                                                                                                                            
+# Raspberry Linux Dist Upgrade                                                                                                              
+sudo rpi-update                                                                                                                             
+                                                                                                                                            
+## Backup a drive into an image                                                                                                             
+# Full backup with dd and bzip2 (high compression level 9)                                                                                  
+sudo dd if=/dev/mmcblk0 | bzip2 -9f ~bkup.img.bz2i                                                                                          
+# Basic dd and gzip with defaults (compression should be -6)                                                                                
+sudo bash -c "dd if=/dev/mmcblk0 | gzip > /mnt/pidrive/backup/pi31-backup-2016-11-03_xx-xx.img.gz" &i                                       
+# Basic dd with multicore compression (need to install pigz, shall be faster, huge cpu load, default compression = 6)                       
+sudo bash -c "dd if=/dev/mmcblk0 | pigz > /mnt/pidrive/backup/pi31-backup-2016-11-03_xx-xx.img.gz" &                                        
+# dd with quick multicore compression (good enought and quite fast)                                                                         
+sudo bash -c "dd if=/dev/mmcblk0 | pigz -1 > /mnt/pidrive/backup/pi31-backup-2016-11-03_xx-xx.img.gz" &                                     
+# dd backup over ssh with fast multicore compression                                                                                        
+sudo dd if=/dev/mmcblk0 | pigz -1 - | ssh pi@pi31 "cat > /mnt/pidrive/backup/ssh-pigz-image-pi21_2016-11-03_xx-xx.img.gz"                   
+                                                                                                                                            
+# Copy file via rsync over the network                                                                                                      
+rsync -r -v --progress -e shh user@remote-system:/address/to/file /home/user/                                                               
+                                                                                                                                            
+# Software update inkl. upgrade & clean                                                                                                     
+sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoclean && sudo apt-get autoremove                                         
+                                                                                                                                            
+# Verzeichnis zu PATH Hinzufügen                                                                                                            
+PATH=$PATH:./sampledir                                                                                                                      
+                                                                                                                                            
+# Programm in apt Verzeichnis suchen                                                                                                        
+apt-cache search programname                                                                                                                
+                                                                                                                                            
+# Unzip tar Archiv                                                                                                                          
+tar -xvf file.tar                                                                                                                           
+                                                                                                                                            
+# Unzip rar Archiv                                                                                                                          
+unzip file.zip -d folder                                                                                                                    
+                                                                                                                                            
+# Create zip Archive from subfolders                                                                                                        
+# compression leve from -1 to -9, verbose -v                                                                                                
+zip -r /tmp/ar.zip ./folder                                                                                                                 
+                                                                                                                                            
+# CPU-Temperatur auslesen                                                                                                                   
+/opt/vc/bin/vcgencmd measure_temp                                                                                                           
+                                                                                                                                            
+# Wichtige Orte                                                                                                                             
+filesystem table: /etc/fstab                                                                                                                
+repository list: /etc/apt                                                                                                                   
+                                                                                                                                            
+# PDFs zusammenführen                                                                                                                       
+pdfunite input1.pdf input2.pdf merge.pdf                                                                                                    
+                                                                                                                                            
+# Festplattenbelegung anzeigen                                                                                                              
+df -h                                                                                                                                       
+                                                                                                                                            
+# Anwendung/Script zum Autostart hinzufügen                                                                                                 
+vim /etc/rc.local                                                                                                                           
+                                                                                                                                            
+# Prozess mit kill und pid abschießen                                                                                                       
+sudo kill #pid                                                                                                                              
+                                                                                                                                            
+# Alle laufenden Prozesse mit pid ausgeben                                                                                                  
+ps -aux | grep Prozessname                                                                                                                  
+                                                                                                                                            
+## Samba Configuration                                                                                                                      
+# Samba User hinzufügen                                                                                                                     
+sudo smbpasswd -a username                                                                                                                  
+# Samba Freigabe einrichten                                                                                                                 
+[freigabename]                                                                                                                              
+comment = Kommentar-zur-Freigabe                                                                                                            
+path = /pfad/zurm/Ziel                                                                                                                      
+read only = no                                                                                                                              
+writeable = yes                                                                                                                             
+browseable = yes                                                                                                                            
+create mask = 0777                                                                                                                          
+directory mask = 0777                                                                                                                       
+                                                                                                                                            
+# List recently installed packages                                                                                                          
+grep " install " /var/log/dpkg.log                                                                                                          
+                                                                                                                                            
+#For-Schleife                                                                                                                               
+for i in hans peter alexander; do echo "hallo $i"; done //Eigene Menge                                                                      
+for i in (1..5); do echo "hallo nummer $i"; done //Intervall                                                                                
+for i in *; do echo "hallo datei $i"; done //Alle Dateien im Verzeichnis                                                                    
+for i in param1 param2 param3; do for j in *; do echo "hallo $j mit $i"; done; done //geschachtelt                                          
+                                                                                                                                            
+# Script/Programm im Hintergrund ausüfhren ohne Ausgabe                                                                                     
+nohup sh myscript.sh &                                                                                                                      
+nohup sh myscript > out.log &                                                                                                               
+                                                                                                                                            
+# Virtual Box Gast Ornder einbinden                                                                                                         
+mkdir /media/myshare                                                                                                                        
+sudo ???                                                                                                                                    
+                                                                                                                                            
+# Monitor logfile                                                                                                                           
+tail -fn0 myfile.log                                                                                                                        
+                                                                                                                                            
+# Upgrade (L)Ubuntu System                                                                                                                  
+sudo do-release-upgrade                                                                                                                     
+                                                                                                                                            
+# Shell farbig machen                                                                                                                       
+Folgende Zeile in ~/.bashrc entkommentieren: force_color_prompt=yes                                                                         
+                                                                                                                                            
+# Change Hostname                                                                                                                           
+sudo hostname -b NEUER_HOSTNAME                                                                                                             
+                                                                                                                                            
+# Change to static IP in /etc/network/interfaces (Alte Methode!)                                                                            
+# Ethernet                                                                                                                                  
+auto eth0                                                                                                                                   
+allow-hotplug eth0                                                                                                                          
+iface eth0 inet static                                                                                                                      
+address 192.168.1.2                                                                                                                         
+netmask 255.255.255.0                                                                                                                       
+gateway 192.168.1.1                                                                                                                         
+dns-nameservers 192.168.1.1                                                                                                                 
+                                                                                                                                            
+# Change to static IP via dhcpcd deamon (neue Methode!)                                                                                     
+sudo vim /etc/dhcpcd.conf                                                                                                                   
+        interface etho0                                                                                                                     
+        static ip_address=192.168.178.37/24                                                                                                 
+        static routers=192.168.178.1                                                                                                        
+        static domain_name_servers=192.168.178.1                                                                                            
+sudo services networking restart (extra ausführen)                                                                                          
+                                                                                                                                            
+## Benchmark/Stress Test für Raspi (sysbench)                                                                                               
+# CPU Test                                                                                                                                  
+sysbench --test=cpu --cpu-max-prime=20000 --num-threads=4 run                                                                               
+                                                                                                                                            
+# HDD Benchmark/Test                                                                                                                        
+sudo hdparm -tT /dev/sda                                                                                                                    
+                                                                                                                                            
+# Change user access/rights on mounted ext4 device                                                                                          
+sudo chmod -R USERNAME /mnt/pidrive                                                                                                         
+                                                                                                                                            
+# Generate a random password (multiple ways)                                                                                                
+< /dev/urandom tr -dc '12345!@#$%qwertQWERTasdfgASDFGzxcvbZXCVB' | head -c8; echo ""                                                        
+< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c6                                                                                               
+openssl rand -base64 32                                                                                                                     
+date +%s | sha256sum | base64 | head -c 32 ; echo                                                                                           
+                                                                                                                                            
+# Lese/Schreibe IOs für Laufwerke anzeigen                                                                                                  
+sudo iotop                                                                                                                                  
+                                                                                                                                            
+# IP Adresse/Range suchen                                                                                                                   
+nmap -sP 192.168.1.0/24                                                                                                                     
+                                                                                                                                            
+# Verzeichnisgröße anzeigen (show directory size)                                                                                           
+du -sh ./directory                                                                                                                          
+du -h --max-depth=1 ./someDirectory                                                                                                         
+                                                                                                                                            
+# Test nginx Configuration                                                                                                                  
+sudo nginx -t -c /etc/nginx/nginx.conf                                                                                                      
+                                                                                                                                            
+# ShellInABox Config                                                                                                                        
+sudo apt-get install shellinabox                                                                                                            
+sudo vim /etc/default/shellinabox                                                                                                           
+        SHELLINABOX_PORT=31420 
