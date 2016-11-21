@@ -179,3 +179,9 @@ sudo vim /etc/default/shellinabox
 
 # Generate password for htpasswd
 echo -e "your-username:`perl -le 'print crypt("your-password","salt")'`" > /etc/nginx/htpasswd
+
+# Add job to a crontab
+sudo crontab -e (for user root)
+crontab -e (for user pi)
+crontab -ls (list entries for user)
+
