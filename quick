@@ -101,7 +101,7 @@ grep " install " /var/log/dpkg.log
                                                                                                                                             
 #For-Schleife                                                                                                                               
 for i in hans peter alexander; do echo "hallo $i"; done //Eigene Menge                                                                      
-for i in (1..5); do echo "hallo nummer $i"; done //Intervall                                                                                
+for i in {1..5}; do echo "hallo nummer $i"; done //Intervall                                                                                
 for i in *; do echo "hallo datei $i"; done //Alle Dateien im Verzeichnis                                                                    
 for i in param1 param2 param3; do for j in *; do echo "hallo $j mit $i"; done; done //geschachtelt                                          
                                                                                                                                             
