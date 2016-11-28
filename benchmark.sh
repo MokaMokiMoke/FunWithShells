@@ -37,7 +37,7 @@ echo
 for ((numThreads=1; numThreads <= $maxThreads; numThreads*=2))
 	do
 	echo $numThreads threads:
-	for run in {1..3}
+	for ((run=1; run <= $numRuns; run+=1))
 		do
 		time=$(sysbench --test=cpu --cpu-max-prime=$maxPrimes --num-threads=$numThreads run | \
 		grep "execution time" | cut -d ":" -f2 | cut -d "/" -f1)
