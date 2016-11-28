@@ -184,3 +184,6 @@ echo -e "your-username:`perl -le 'print crypt("your-password","salt")'`" > /etc/
 sudo crontab -e (for user root)
 crontab -e (for user pi)
 crontab -l (list entries for user, location: /var/spool/cron/crontabs, root only)
+
+# Make syntax highlighting permanent in vim
+ sudo /usr/share/vim/vimrc (discomment the syntax on)
