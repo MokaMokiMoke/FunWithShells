@@ -67,7 +67,8 @@ zip -r /tmp/ar.zip ./folder
 # Wichtige Orte                                                                                                                             
 filesystem table: /etc/fstab                                                                                                                
 repository list: /etc/apt                                                                                                                   
-                                                                                                                                            
+                                                                                 
+                                                                                 
 # PDFs zusammenführen                                                                                                                       
 pdfunite input1.pdf input2.pdf merge.pdf                                                                                                    
                                                                                                                                             
@@ -141,7 +142,7 @@ sudo vim /etc/dhcpcd.conf
         static ip_address=192.168.178.37/24                                                                                                 
         static routers=192.168.178.1                                                                                                        
         static domain_name_servers=192.168.178.1                                                                                            
-sudo services networking restart (extra ausführen)                                                                                          
+sudo service networking restart (extra ausführen)                                                                                          
                                                                                                                                             
 ## Benchmark/Stress Test für Raspi (sysbench)                                                                                               
 # CPU Test                                                                                                                                  
