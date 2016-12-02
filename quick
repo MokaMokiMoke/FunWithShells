@@ -164,7 +164,7 @@ date +%s | sha256sum | base64 | head -c 32 ; echo
 sudo iotop                                                                                                                                  
                                                                                                                                             
 # IP Adresse/Range suchen                                                                                                                   
-nmap -sP 192.168.1.0/24                                                                                                                     
+nmap -sP 192.168.178.0/24                                                                                                                     
                                                                                                                                             
 # Verzeichnisgröße anzeigen (show directory size)                                                                                           
 du -sh ./directory                                                                                                                          
