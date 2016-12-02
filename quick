@@ -187,4 +187,10 @@ crontab -e (for user pi)
 crontab -l (list entries for user, location: /var/spool/cron/crontabs, root only)
 
 # Make syntax highlighting permanent in vim
- sudo /usr/share/vim/vimrc (discomment the syntax on)
+sudo /usr/share/vim/vimrc (discomment the syntax on)
+
+# Fail2Ban usage
+sudo fail2ban-client set nginx-http-auth unbanip 111.111.111.111
+sudo fail2ban-client status
+sudo fail2ban-client status nginx-http-auth
+sudo iptables -S
