@@ -1,3 +1,6 @@
+
+#!/bin/bash
+
 git clone https://github.com/MokaMokiMoke/Seafile
 git clone https://github.com/MokaMokiMoke/BinaryClock
 git clone https://github.com/MokaMokiMoke/FunWithShells
