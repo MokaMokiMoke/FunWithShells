@@ -1,23 +1,30 @@
 #!/bin/bash
 
-gitStr="https://github.com/"
-declare -a arr=("Seafile" "BinaryClock" "FunWithShells" "Hashbase" "RandomFileGenerator" "FloydWarshall" 	\
-		"Weihnachtsraetsel" "isFullPrimeRecursive" "BCryptTest" "BarGraphDrawer" "NetMonitor"		\
+gitUrl="https://github.com"
+gitUser="MokaMokiMoke"
+cloneCmd="git clone"
+fetchCmd="git fetch"
+
+declare -a repos=("SeaFile" "BinaryClock" "FunWithShells" "HashBase" "RandomFileGenerator" "FloydWarshall"	\
+		"Weihnachtsraetsel" "BCryptTest" "BarGraphDrawer" "NetMonitor" "isFullPrimeRecursive"		\
 		"BigIntegerCalculator")
 
-# Initially clone all repos
-for i in "${arr[@]}"
+# Init clone
+for repo in "${repos[@]}"
 do
-	if [ -d $i ]; then
+	if [ -d $repo ]; then
 		continue
 	fi
 
-	git clone $gitStr$i
+	$cloneCmd $gitUrl/$gitUser/$repo
 done
 
 # Update Repos
 
-for i in "${arr[@]}"
+for repo in "${repos[@]}"
 do
-	git fetch $gitStr$i
+	cd $repo
+	$fetchCmd
+	cd ..
 done
+	
