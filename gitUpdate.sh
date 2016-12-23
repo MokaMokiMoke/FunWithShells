@@ -1,15 +1,23 @@
-
 #!/bin/bash
 
-git clone https://github.com/MokaMokiMoke/Seafile
-git clone https://github.com/MokaMokiMoke/BinaryClock
-git clone https://github.com/MokaMokiMoke/FunWithShells
-git clone https://github.com/MokaMokiMoke/HashBase
-git clone https://github.com/MokaMokiMoke/RandomFileGenerator
-git clone https://github.com/MokaMokiMoke/FloydWarshall
-git clone https://github.com/MokaMokiMoke/Weihnachtsraetsel
-git clone https://github.com/MokaMokiMoke/isFullPrimeRecursive
-git clone https://github.com/MokaMokiMoke/BCryptTest
-git clone https://github.com/MokaMokiMoke/BarGraphDrawer
-git clone https://github.com/MokaMokiMoke/NetMonitor
-git clone https://github.com/MokaMokiMoke/BigIntegerCalculator
+gitStr="https://github.com/"
+declare -a arr=("Seafile" "BinaryClock" "FunWithShells" "Hashbase" "RandomFileGenerator" "FloydWarshall" 	\
+		"Weihnachtsraetsel" "isFullPrimeRecursive" "BCryptTest" "BarGraphDrawer" "NetMonitor"		\
+		"BigIntegerCalculator")
+
+# Initially clone all repos
+for i in "${arr[@]}"
+do
+	if [ -d $i ]; then
+		continue
+	fi
+
+	git clone $gitStr$i
+done
+
+# Update Repos
+
+for i in "${arr[@]}"
+do
+	git fetch $gitStr$i
+done
