@@ -8,7 +8,7 @@ sudo htpasswd -c -b /etc/nagios3/htpasswd.users nagiosadmin nagiosadmin
 /etc/nagios3/conf.d                                                                                                                         
                                                                                                                                             
 # ARP Netzwerk Scan                                                                                                                         
-arp-scan --interface=eth0 192.168.178.0/24                                                                                                  
+arp-scan --interface=eth0 192.168.178.0/24                                                                                                 
                                                                                                                                             
 # Zeichenketten ersetzten - String Replacement                                                                                              
 sed -i -- s/fritz.box/Philipps-iPad/g philipps-ipad.cfg                                                                                     
