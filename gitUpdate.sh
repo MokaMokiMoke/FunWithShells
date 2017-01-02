@@ -2,8 +2,6 @@
 
 gitUrl="https://github.com"
 gitUser="MokaMokiMoke"
-cloneCmd="git clone"
-fetchCmd="git pull"
 
 magenta="\033[35m"
 green="\033[32m"
@@ -20,7 +18,7 @@ do
 		continue
 	fi
 
-	$cloneCmd $gitUrl/$gitUser/$repo
+	git clone $gitUrl/$gitUser/$repo
 
 done
 echo -e "$green Colning finished $def"
@@ -30,7 +28,10 @@ echo -e "$magenta Updating Repositories $def"
 for repo in "${repos[@]}"
 do
 	cd $repo
-	$fetchCmd
+	pullReport=$(git pull)
+	if [ "$pullReport" = "Already up-to-date." ]; then
+		echo -e "$green \tRepo $repo is already up to date $def"
+	fi
 	cd ..
 done
 echo -e "$green Update finished $def"
