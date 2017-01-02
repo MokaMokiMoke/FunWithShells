@@ -198,5 +198,5 @@ sudo iptables -S
 # Logrotation via logrotate
 /etc/logrotate.d/
 
-# Fetch external ip address
+# Fetch external ip address (ipv6 also avilable)
 curl -4 icanhazip.com
