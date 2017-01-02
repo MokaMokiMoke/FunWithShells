@@ -3,7 +3,7 @@
 gitUrl="https://github.com"
 gitUser="MokaMokiMoke"
 cloneCmd="git clone"
-fetchCmd="git fetch"
+fetchCmd="git pull"
 
 magenta="\033[35m"
 green="\033[32m"
