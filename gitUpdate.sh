@@ -5,6 +5,7 @@ gitUser="MokaMokiMoke"
 
 magenta="\033[35m"
 green="\033[32m"
+blue="\033[34m"
 def="\033[0m"
 
 declare -a repos=($(curl -s "https://api.github.com/users/$gitUser/repos?page=$PAGE&per_page=100" | grep -e 'git_url*' | cut -d \" -f 4 | cut -d"/" -f5 | cut -d"." -f1))
@@ -31,6 +32,8 @@ do
 	pullReport=$(git pull)
 	if [ "$pullReport" = "Already up-to-date." ]; then
 		echo -e "$green \tRepo $repo is already up to date $def"
+	else
+		echo -e "$blue \tRepo $repo was updated $def"
 	fi
 	cd ..
 done
