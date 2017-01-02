@@ -194,3 +194,6 @@ sudo fail2ban-client set nginx-http-auth unbanip 111.111.111.111
 sudo fail2ban-client status
 sudo fail2ban-client status nginx-http-auth
 sudo iptables -S
+
+# Logrotation via logrotate
+/etc/logrotate.d/
