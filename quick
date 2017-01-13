@@ -200,3 +200,10 @@ sudo iptables -S
 
 # Fetch external ip address (ipv6 also avilable)
 curl -4 icanhazip.com
+
+# Setup dhcp server
+sudo apt-get install isc-dhcp-server
+sudo vim /etc/default/isc-dhcp-server (enter interface(s))
+sudo vim /etc/dhcp.dhcpd.conf (add subnets)
+wiki https://wiki.ubuntuusers.de/ISC-DHCPD/
+
