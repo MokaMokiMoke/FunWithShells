@@ -207,3 +207,15 @@ sudo vim /etc/default/isc-dhcp-server (enter interface(s))
 sudo vim /etc/dhcp.dhcpd.conf (add subnets)
 wiki https://wiki.ubuntuusers.de/ISC-DHCPD/
 
+# Touch Display driver
+git clone https://github.com/goodtft/LCD-show.git
+sudo chmod -R 755 LCD-show
+sudo ./LCD-show/LCD35-show
+
+# Stetup wifi for Raspi 3
+sudo iwlist wlan0 scan
+sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+  network={
+      ssid="The_ESSID_from_earlier"
+      psk="Your_wifi_password"
+  }
