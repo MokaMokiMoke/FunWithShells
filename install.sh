@@ -15,3 +15,6 @@ sudo apt-get install -y vim htop iotop nload sysbench pigz rsync git tmux tree n
 
 sudo apt-get -y autoclean
 sudo apt-get -y autoremove
+
+# One-Liner
+sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get install -y vim htop iotop nload sysbench pigz rsync git tmux tree nmap ghostscript curl && sudo apt-get autoclean && sudo apt-get autoremove
