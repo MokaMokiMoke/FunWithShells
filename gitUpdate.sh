@@ -1,7 +1,9 @@
 #!/bin/bash
 
-gitUrl="https://github.com"
+gitHttpUrl="https://github.com"
 gitUser="MokaMokiMoke"
+#gitProtocol="git"
+gitProtocol="https"
 
 magenta="\033[35m"
 green="\033[32m"
@@ -18,8 +20,15 @@ do
 		echo -e "$green \tRepo $repo already exists $def"
 		continue
 	fi
-
-	git clone $gitUrl/$gitUser/$repo
+	
+	if [ $gitProtocol = "git" ]; then
+		git clone git@github.com:$gitUser/$repo.git
+	elif [ $gitProtocol = "https" ]; then
+		git clone $gitHttpUrl/$gitUser/$repo
+	else
+		echo -e "$red Protocol is not set properly$def"
+		exit 1
+	fi
 
 done
 echo -e "$green Colning finished $def"
