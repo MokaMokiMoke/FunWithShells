@@ -41,6 +41,9 @@ sudo dd if=/dev/mmcblk0 | pigz -1 - | ssh pi@pi31 "cat > /mnt/pidrive/backup/ssh
 # Copy file via rsync over the network
 rsync -r -v --progress -e shh user@remote-system:/address/to/file /home/user/
 
+# Sync via rsync between rsync servers
+rsync -avz --delete --progress -h /sharedfolders/home/John John@192.168.2.100:/volume1/homes/John
+
 # Software update inkl. upgrade & clean
 sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoclean && sudo apt-get autoremove
 sudo apt-get -u upgrade # displays only changes/dry-run
@@ -227,3 +230,6 @@ network={
 ssid="The_ESSID_from_earlier"
 psk="Your_wifi_password"
 }
+
+# Connect to a OpenVPN server
+sudo openvpn --config /etc/opnvpn/myconfig.ovpn
