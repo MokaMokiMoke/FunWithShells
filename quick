@@ -233,3 +233,30 @@ psk="Your_wifi_password"
 
 # Connect to a OpenVPN server
 sudo openvpn --config /etc/opnvpn/myconfig.ovpn
+
+# List all users
+sudo cat /etc/passwd
+
+# Configure OpenVPN
+sudo apt install openvpn
+sudo openvpn --config /etc/openvpn/myEndpoint/config.ovpn
+sudo service openvpn start
+
+# Mount all devices in /etc/fstab
+sudo mount -a
+sudo umount /foo/bar # Dismount specific device
+sudo umount # Unmount ALL mounted devices!
+
+# Let´s encrypt certbot for Debian/Raspbian
+sudo apt-get update
+sudo apt-get install software-properties-common
+sudo add-apt-repository universe
+sudo add-apt-repository ppa:certbot/certbot
+sudo apt-get update
+sudo apt-get install certbot python-certbot-nginx # install actual certbot
+sudo certbot --nginx # Obtain certificate for Nginx and auto config nginx config
+sudo certbot certonly --nginx # Obtain certificate only
+udo certbot renew --dry-run # Test automatic renewal
+# Renew option shoulb be automatically installed into /etc/crontab/, /etc/cron.*/* or systemctl list-timers
+# Test SSL Setup aftewars: https://www.ssllabs.com/ssltest/
+
