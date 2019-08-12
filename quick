@@ -260,3 +260,10 @@ udo certbot renew --dry-run # Test automatic renewal
 # Renew option shoulb be automatically installed into /etc/crontab/, /etc/cron.*/* or systemctl list-timers
 # Test SSL Setup aftewars: https://www.ssllabs.com/ssltest/
 
+# Take ownership
+sudo chown pi databases/
+sudo chown -R pi logs/ # Recursively
+
+# Generate self-sigend SSL Certificates
+sudo openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout privkey.pem -out fullchain.pem
+sudo openssl dhparam -dsaparam -out /etc/ssl/private/dhparam4096.pem 4096
