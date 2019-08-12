@@ -267,3 +267,7 @@ sudo chown -R pi logs/ # Recursively
 # Generate self-sigend SSL Certificates
 sudo openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout privkey.pem -out fullchain.pem
 sudo openssl dhparam -dsaparam -out /etc/ssl/private/dhparam4096.pem 4096
+
+# Install pip
+sudo apt-get install python-setuptools
+sudo easy_install pip
