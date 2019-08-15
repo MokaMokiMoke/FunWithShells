@@ -274,3 +274,6 @@ sudo easy_install pip
 
 # Uninstall all packages from a specific date/time
 grep "2015-12-19.*.install " /var/log/dpkg.log | awk '{ print $4 }' | cut -d: -f1 | xargs sudo apt-get purge
+
+# Compress whole folder incl. sub directories
+tar cf - paths-to-archive | pigz > archive.tar.gz
