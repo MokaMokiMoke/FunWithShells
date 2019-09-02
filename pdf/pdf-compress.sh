@@ -6,7 +6,7 @@
 ## Last revised 2016-07-29
 
 # Usage
-# ./pdf-compress.sh [screen|ebook|prepress|default] [verbose]
+# ./pdf-compress.sh [prepress|ebook|default|screen] [verbose]
 
         # Variables and preparation
 {
@@ -19,7 +19,7 @@ pdfs=$(find ./ -type f -name "*.pdf")
 total=$(echo "$pdfs" | wc -l)
 log=./log
 verbose="-dQUIET"
-mode="prepress"
+mode="default"
 echo "0" | tee $successlog $gainlog > /dev/null
 }
 
