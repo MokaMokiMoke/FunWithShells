@@ -274,3 +274,8 @@ grep "2015-12-19.*.install " /var/log/dpkg.log | awk '{ print $4 }' | cut -d: -f
 
 # Compress whole folder incl. sub directories
 tar cf - paths-to-archive | pigz > archive.tar.gz
+
+# Add new user (and add to groups)
+adduser username
+usermod -aG sudo username
+usermod -aG ssh username
