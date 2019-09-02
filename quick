@@ -13,9 +13,6 @@ arp-scan --interface=eth0 192.168.178.0/24
 # Zeichenketten ersetzten - String Replacement
 sed -i -- s/fritz.box/Philipps-iPad/g philipps-ipad.cfg
 
-# Mirror two directories with rsync
-sudo rsync -rtvu --delete /etc/nagios3/ /home/pi/.backup/nagios3/
-
 # Delte not empty directory
 rm -rf conf.d/ chmod --reference services.cfg servicegroups.cfg
 
@@ -41,8 +38,8 @@ sudo dd if=/dev/mmcblk0 | pigz -1 - | ssh pi@pi31 "cat > /mnt/pidrive/backup/ssh
 # Copy file via rsync over the network
 rsync -r -v --progress -e shh user@remote-system:/address/to/file /home/user/
 
-# Sync via rsync between rsync servers
-rsync -avz --delete --progress -h /sharedfolders/home/John John@192.168.2.100:/volume1/homes/John
+# Mirror Two directories via rsync
+rsync -avz --delete --progress --partial --human-readable --exclude=ACDC --bwlimit=1024  Joe@192.168.0.5:/volume1/homes/Joe/Media/Music/ ./Music
 
 # Software update inkl. upgrade & clean
 sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoclean && sudo apt-get autoremove
