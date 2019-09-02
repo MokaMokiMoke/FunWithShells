@@ -1,0 +1,11 @@
+proc            /proc           proc    defaults          0       0
+PARTUUID=3b1aa5a3-01  /boot           vfat    defaults          0       2
+PARTUUID=3b1aa5a3-02  /               ext4    defaults,noatime  0       1
+# a swapfile is not a swap partition, no line here
+#   use  dphys-swapfile swap[on|off]  for that
+
+# WD PiDrive 1TB
+UUID='426c5092-1c45-41c1-bfce-6f2fb0977f20'	/mnt/pidrive	ext4	defaults	0	0
+
+# NAS SMB Share for SeaFile Backup
+//192.168.2.105/home		/mnt/backup	cifs	credentials=/home/pi/.smbcredentials,iocharset=utf8,vers=2.0,rw,auto,dir_mode=0777,file_mode=0777,nounix	0	0
