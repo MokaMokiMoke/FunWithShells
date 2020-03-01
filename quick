@@ -72,9 +72,6 @@ pdfunite input1.pdf input2.pdf merge.pdf
 # Festplattenbelegung anzeigen
 df -h
 
-# Anwendung/Script zum Autostart hinzufügen
-vim /etc/rc.local
-
 # Prozess mit kill und pid abschießen
 sudo kill #pid
 
