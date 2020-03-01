@@ -13,9 +13,6 @@ arp-scan --interface=eth0 192.168.178.0/24
 # Zeichenketten ersetzten - String Replacement
 sed -i -- s/fritz.box/Philipps-iPad/g philipps-ipad.cfg
 
-# Delte not empty directory
-rm -rf conf.d/ chmod --reference services.cfg servicegroups.cfg
-
 # Full backup with tar
 tar -cvpf /backups/fullbackup.tar --directory=/ --exclude=proc --exclude=sys --exclude=dev/pts
 --exclude=backups --exclude=mnt
