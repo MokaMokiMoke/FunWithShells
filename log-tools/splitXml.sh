@@ -2,7 +2,9 @@
 rm -rf ./bikes
 mkdir bikes
 
-for i in {1..490}; do
+max=$(cat alle.xml | grep UTF-8 | wc -l)
+
+for i in $(seq 1 $max); do
 	bike=$(cat alle.xml | head -n 1 | tr -d '\t' | tr -d \$'\r')
 	sed -i '1d' alle.xml
 	head -n 28 alle.xml > ./bikes/"$bike"
