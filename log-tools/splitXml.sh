@@ -1,12 +1,18 @@
 #/bin/bash
-rm -rf ./bikes
-mkdir bikes
+in="$1"
 
-max=$(cat alle.xml | grep /ebike | wc -l)
+max=$(cat $in | grep '/ebike' | wc -l)
+
+echo "Expecting: $max bikes"
 
 for i in $(seq 1 $max); do
-	bike=$(cat alle.xml | head -n 1 | tr -d '\t' | tr -d \$'\r')
-	sed -i '1d' alle.xml
-	head -n 28 alle.xml > ./bikes/"$bike"
-	sed -i '1,29d' alle.xml
+	bike=$(cat $in | head -n 1 | tr -d '\t' | tr -d \$'\r')
+	sed -i '1d' $in
+	head -n 28 $in > ./bikes/"$bike"
+	sed -i '1,29d' $in
 done
+
+echo "Generated: $(ls ./bikes/*.xml | wc -l) bikes"
+arc="bikes.zip"
+zip -qqr $arc ./bikes/ 
+echo "Bikes compressed: $arc" 
