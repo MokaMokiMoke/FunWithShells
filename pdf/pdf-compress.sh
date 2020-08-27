@@ -1,21 +1,21 @@
 #!/bin/bash
 
 ## Script to compress PDF Files using ghostscript incl. subdirs
-## Copyright (C) 2016 Maximilian Fries - All Rights Reserved
+## Copyright (C) 2020 Maximilian Fries - All Rights Reserved
 ## Contact: maxfries@t-online.de
-## Last revised 2016-07-29
+## Last revised 2020-08-27
 
 # Usage
 # ./pdf-compress.sh [prepress|ebook|default|screen] [verbose]
 
-        # Variables and preparation
+# Variables and preparation
 {
 count=0
 success=0
 successlog=./success.tmp
 gain=0
 gainlog=./gain.tmp
-pdfs=$(find ./ -type f -name "*.pdf")
+pdfs=$(find ./ -type f -iname "*.pdf")
 total=$(echo "$pdfs" | wc -l)
 log=./log
 verbose="-dQUIET"
