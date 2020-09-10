@@ -47,6 +47,9 @@ find . -type f -iname "*.pdf" | while read i; do
         else
                 echo -e "\tSometing changed"
         fi
-        echo "ENDE: Time: $((eTime-sTime)) [s], -$((oSize-nSize)) [Byte]"
+
+	dSize=-$((oSize-nSize))
+
+        echo "ENDE: Time: $((eTime-sTime)) [s], ${dSize//--/+} [Bytes]"
         echo ""
 done
