@@ -48,8 +48,14 @@ find . -type f -iname "*.pdf" | while read i; do
                 echo -e "\tSometing changed"
         fi
 
-	dSize=-$((oSize-nSize))
+	dSize=$((oSize-nSize))
+	sign="+"
+	if [ $dSize -lt 0 ]; then
+		sign="-"
+	fi
 
-        echo "ENDE: Time: $((eTime-sTime)) [s], ${dSize//--/+} [Bytes]"
+	aSize=$(echo $dSize | tr -d -)
+
+        echo "ENDE: Time: $((eTime-sTime)) [s], $sign$(numfmt --grouping $aSize | sed 's/,/./g') [Bytes]"
         echo ""
 done
