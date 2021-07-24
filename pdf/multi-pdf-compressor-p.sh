@@ -1,10 +1,10 @@
 #!/bin/bash
-# Maximilian Fries, 25.08.2020
+# Maximilian Fries, 25.07.2021
 # maxfries@t-online.de
 
-# foo="screen ebook prepress default"
+ls *.pdf > pdfs.txt
+declare -a params=("screen" "ebook" "prepress" "default")
 
-for f in *.pdf; do
-  parallel -a params.txt \
-  gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/{} -dNOPAUSE -dBATCH -sOutputFile={}-"$f" "$f"
+for p in "${params[@]}"; do
+  cat pdfs.txt | parallel gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/$p -dNOPAUSE -dBATCH -sOutputFile=$p-"{1}" "{}";
 done
