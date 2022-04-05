@@ -1,4 +1,5 @@
 ## Author: Maximilian Fries
+## Date: tbd 
 
 # Nagios neu starten
 sudo /etc/init.d/nagios3 restart
