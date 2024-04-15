@@ -1,0 +1,49 @@
+# Renault Bank (Tagesgeld)
+renault="Kontonummer 0123456789" # 10 Digit Kontonummer
+
+# Klarmobil Rechnung
+klarmob="0123456789" # 10 Digit Kundennummer
+klarmobNr="Mobilfunknummer 01515 / 1234567" # Mobilfunknummer
+
+# Trade Republic
+tr1="WERTPAPIERABRECHNUNG" # Header
+tr2="0123456789" # 10 Digti Deptonummer
+ftseAccISIN="IE00BK5BQT80"
+ftseDistISIN="IE00B3RBWM25"
+worldSRIAccISIN="IE00BYX2JD69"
+emSRIAccISIN="IE00BYVJRP78"
+
+# Vodafone
+vod1="KUNDEN NR. 123456789" # 9 Digit Kundennummer
+vod2="Seite 1 von"
+
+# DKB Girokonto
+dkb1="Deutsche Kreditbank AG"
+dkb2="Girokonto 0123456789" # 10 Digit Kontonummer
+
+# DKB Tagesgeld
+dkbTg="Tagesgeld 0123456789" # 10 Digit Kontonummer
+
+# SimplyTel (Rechnung)
+SimplyKdNr="B1234567"
+datumDE=""
+datumEN=""
+datumMON=""
+
+# O2 Rechnung
+O2KdNr="0123456789" # 10 Digit Kundennummer
+O2Rech="Ihre Rechnung" # Header
+O2Header="Telefónica Germany GmbH"
+
+# sim.de Rechnung
+sim1="C1234567" # Kundennummer
+sim2="sim.de ist eine Marke der Drillisch Online GmbH"
+sim3="Für den Zeitraum"
+
+# Trade Republic Zinsen (Tagesgeld)
+trZin1="TRADE REPUBLIC BANK GMBH"
+trZin2="0123456789" # Verrechnungskonto
+trZin3="ABRECHNUNG ZINSEN"
+trZin4="GUTSCHRIFT NACH STEUERN"
+# Regex greift erst ab 2023-10, davor wurde keine konkrete Duraiton angegeben
+trZinRegEx="\b[0-3]?[0-9]\.[0-1]?[0-9]\.[0-9]{4}\s*-\s*[0-3]?[0-9]\.[0-1]?[0-9]\.[0-9]{4}\b"
