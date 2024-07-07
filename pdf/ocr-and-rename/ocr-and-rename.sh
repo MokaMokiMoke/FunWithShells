@@ -1,13 +1,5 @@
 #!/bin/bash
 
-################################################################################
-# Script Name: ocr-and-rename.sh
-# Author: Maximilian Fries (maxfries(at)t-online.de)
-# Date: 15.04.2024 (dd-mm-yyyy)
-# Purpose: This script reads PDF files and renames them.
-# Version: 0.8
-################################################################################
-
 # Modes: --file or --folder
 # Setze den Standardwert für MODE auf "--folder" und für TARGET auf das aktuelle Verzeichnis, falls keine Parameter angegeben sind
 MODE="--folder"
@@ -167,12 +159,12 @@ renaultBank() {
     fi
 }
 
-klarmobil() {
+klarmobilRech() {
 	local text_file="$1"
 	[ -e "$text_file" ] || return
 
 	# Check if file is a Klarmobil Rechnung
-	if grep -q "$klarmob" "$text_file" && grep -q "$klarmobNr" "$text_file"; then
+	if grep -q "$klarmob" "$text_file" && grep -q "$klarmobNr" "$text_file" && grep -q "$klarmobRech" "$text_file"; then
 		echo "INFO: $(basename "$text_file") is a Klarmobil Rechnung"
 		datum=$(grep -B2 "$klarmob" "$text_file" | head -1 | awk -v FS=. '{print $3,$2}' | sed -e 's: :-:g')
 		filename=${text_file%.*}
@@ -182,9 +174,24 @@ klarmobil() {
 
 }
 
+klarmobilEvn() {
+	local text_file="$1"
+	[ -e "$text_file" ] || return
+
+	# Check if file is a Klarmobil Einzelverbindungsnachweis
+	if grep -q "$klarmob" "$text_file" && grep -q "$klarmobNr" "$text_file" && grep -q "$klarmobEvn" "$text_file"; then
+		echo "INFO: $(basename "$text_file") is a Klarmobil Einzelverbindungsnachweis"
+		datum=$(grep -B2 "$klarmob" "$text_file" | head -1 | awk -v FS=. '{print $3,$2}' | sed -e 's: :-:g')
+		filename=${text_file%.*}
+		local new_filename="EVN Klarmobil $datum.pdf"
+		safe_rename "$filename.pdf" "$new_filename"
+	fi
+
+}
+
 tradeRepublic() {
 	local text_file="$1"
-	#echo "DEBUG: Übergebener Wert für text_file ist: $text_file"
+	echo "DEBUG: Übergebener Wert für text_file ist: $text_file"
 	[ -e "$text_file" ] || return
 
 	# Check if file is a Trade Republic ETF Sparplan Abrechnung
@@ -195,6 +202,35 @@ tradeRepublic() {
 		filename=${text_file%.*}
 		
 		local new_filename="$datum TR Wertpapierabrechnung Sparplan"
+		
+		case "$isin" in 
+			"$ftseAccISIN") new_filename+=" Vanguard FTSE All-World (Acc).pdf" ;;
+			"$ftseDistISIN") new_filename+=" Vanguard FTSE All-World (Dist).pdf" ;;
+			"$worldSRIAccISIN") new_filename+=" MSCI World SRI EUR (Acc).pdf" ;;
+			"$emSRIAccISIN") new_filename+=" MSCI EM SRI USD (Acc).pdf" ;;
+			*) echo "Unknown ISIN: $isin"; return ;;
+		esac
+
+		#echo "DEBUG: ISIN: $isin, old filename: $filename.pdf, new_filename: $new_filename"
+		
+		safe_rename "$filename.pdf" "$new_filename"
+		#mv "$filename.pdf" "$new_filename" && rm "$filename.txt"
+	fi
+}
+
+tradeRepublicSaveback() {
+	local text_file="$1"
+	echo "DEBUG: Übergebener Wert für text_file ist: $text_file"
+	[ -e "$text_file" ] || return
+
+	# Check if file is a Trade Republic ETF Saveback Abrechnung
+	if grep -q "$trSaveback" "$text_file" && grep -q "$tr2" "$text_file"; then
+		echo "INFO: $(basename "$text_file") is a Trade Republic ETF Saveback Abrechnung"
+		datum=$(grep "Ausführung von Saveback am" "$text_file" | head -1 | awk '{print $5}' | awk -v FS=. '{print $3,$2,$1}' | sed -e 's: :-:g')
+		isin=$(grep "ISIN" "$text_file" | head -1 | awk '{print $2}')
+		filename=${text_file%.*}
+		
+		local new_filename="$datum TR Wertpapierabrechnung Saveback"
 		
 		case "$isin" in 
 			"$ftseAccISIN") new_filename+=" Vanguard FTSE All-World (Acc).pdf" ;;
@@ -279,13 +315,13 @@ o2() {
 
 	if grep -q "$O2Header" "$text_file" && grep -q "$O2Rech" "$text_file" && grep -q "$O2KdNr" "$text_file"; then
 		echo "INFO: $(basename "$text_file") is a O2 Rechnung"
-		year=$(grep -A 7 "Rechnungsdatum" "$text_file" | tail --lines 1 | awk -F'.' '{print $3}')
-		month=$(grep -A 7 "Rechnungsdatum" "$text_file" | tail --lines 1 | awk -F'.' '{print $2}')
+		datum=$(grep -A 7 "Rechnungsdatum" "$text_file" | tail --lines 1 | awk -F'.' '{print $3,$2}' | sed -e 's: :-:g')
 		filename=${text_file%.*}
+		
 		# Remove protection from pdf
 		rand=$RANDOM
 		mkdir -p ./tmp
-		local new_filename="Rechnung O2 $year-$month.pdf"
+		local new_filename="Rechnung O2 $datum.pdf"
 		qpdf --decrypt "$filename.pdf" "./tmp/$rand.pdf"
 		echo "INFO: Decrypted $filename.pdf"
 		mv "./tmp/$rand.pdf" "$filename.pdf" && rm -rf "./tmp"
@@ -300,10 +336,12 @@ simDotDe() {
 
 	if grep -q "$sim1" "$text_file" && grep -q "$sim2" "$text_file"; then
 		echo "INFO: $(basename "$text_file") is a sim.de Rechnung"
-		year=$(grep "$sim3" "$text_file" | head --lines 1 | awk -F '[.]' '{print $NF}')
-        month=$(grep "$sim3" "$text_file" | head --lines 1 | awk -F '[.]' '{print $(NF-1)}')
+		datum=$(grep "$sim3" "$text_file" | head --lines 1 | awk -F '[.]' '{print $NF,$(NF-1)}' | sed -e 's: :-:g')
+		#year=$(grep "$sim3" "$text_file" | head --lines 1 | awk -F '[.]' '{print $NF}')
+        #month=$(grep "$sim3" "$text_file" | head --lines 1 | awk -F '[.]' '{print $(NF-1)}')
 		filename=${text_file%.*}
-		local new_filename="Rechnung sim.de $year-$month.pdf"
+		#local new_filename="Rechnung sim.de $year-$month.pdf"
+		local new_filename="Rechnung sim.de $datum.pdf"
 		safe_rename "$filename.pdf" "$new_filename"
 	fi
 }
@@ -315,10 +353,9 @@ tradeRepublicZinsen(){
 	# Check if file is a TR Zinsen Abrechnung
 	if grep -q "$trZin1" "$text_file" && grep -q "$trZin2" "$text_file" && grep -q "$trZin3" "$text_file" && grep -q "$trZin4" "$text_file"; then
 		echo "INFO: $text_file is a TR Zinsen Abrechnung"
-		year=$(grep -E "$trZinRegEx" "$text_file" | awk -F '[.]' '{print $NF}')
-        month=$(grep -E "$trZinRegEx" "$text_file" | awk -F '[.]' '{print $(NF-1)}')
+		datum=$(grep -E "$trZinRegEx" "$text_file" | awk -F '[.]' '{print $NF,$(NF-1)}' | sed -e 's: :-:g')
 		filename=${text_file%.*}
-		local new_filename="TR Zinsen $year-$month.pdf"
+		local new_filename="TR Zinsen $datum.pdf"
 		safe_rename "$filename.pdf" "$new_filename"
 	fi
 }
@@ -326,7 +363,8 @@ tradeRepublicZinsen(){
 run_all_checks() {
 
 	renaultBank "$1"
-	klarmobil "$1"
+	klarmobilRech "$1"
+	klarmobilEvn "$1"
 	tradeRepublic "$1"
 	vodafone "$1"
 	dkbGirokonto "$1"
@@ -335,6 +373,7 @@ run_all_checks() {
 	o2 "$1"
 	simDotDe "$1"
 	tradeRepublicZinsen "$1"
+	tradeRepublicSaveback "$1"
 }
 
 main() {
