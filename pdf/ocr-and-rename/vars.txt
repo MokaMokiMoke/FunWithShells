@@ -5,13 +5,24 @@ renault="Kontonummer 0123456789" # 10 Digit Kontonummer
 klarmob="0123456789" # 10 Digit Kundennummer
 klarmobNr="Mobilfunknummer 01515 / 1234567" # Mobilfunknummer
 
-# Trade Republic
-tr1="WERTPAPIERABRECHNUNG" # Header
+# Trade Republic Sparplan
+tr1="WERTPAPIERABRECHNUNG SPARPLAN"
 tr2="0123456789" # 10 Digti Deptonummer
 ftseAccISIN="IE00BK5BQT80"
 ftseDistISIN="IE00B3RBWM25"
 worldSRIAccISIN="IE00BYX2JD69"
 emSRIAccISIN="IE00BYVJRP78"
+
+# Trade Republic Saveback
+trSaveback="WERTPAPIERABRECHNUNG SAVEBACK"
+
+# Trade Republic Zinsen (Tagesgeld)
+trZin1="TRADE REPUBLIC BANK GMBH"
+trZin2="0123456789" # Verrechnungskonto
+trZin3="ABRECHNUNG ZINSEN"
+trZin4="GUTSCHRIFT NACH STEUERN"
+# Regex greift erst ab 2023-10, davor wurde keine konkrete Duraiton angegeben
+trZinRegEx="\b[0-3]?[0-9]\.[0-1]?[0-9]\.[0-9]{4}\s*-\s*[0-3]?[0-9]\.[0-1]?[0-9]\.[0-9]{4}\b"
 
 # Vodafone
 vod1="KUNDEN NR. 123456789" # 9 Digit Kundennummer
@@ -39,11 +50,3 @@ O2Header="Telefónica Germany GmbH"
 sim1="C1234567" # Kundennummer
 sim2="sim.de ist eine Marke der Drillisch Online GmbH"
 sim3="Für den Zeitraum"
-
-# Trade Republic Zinsen (Tagesgeld)
-trZin1="TRADE REPUBLIC BANK GMBH"
-trZin2="0123456789" # Verrechnungskonto
-trZin3="ABRECHNUNG ZINSEN"
-trZin4="GUTSCHRIFT NACH STEUERN"
-# Regex greift erst ab 2023-10, davor wurde keine konkrete Duraiton angegeben
-trZinRegEx="\b[0-3]?[0-9]\.[0-1]?[0-9]\.[0-9]{4}\s*-\s*[0-3]?[0-9]\.[0-1]?[0-9]\.[0-9]{4}\b"
