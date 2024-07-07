@@ -26,10 +26,13 @@ process_pdf() {
 }
 
 # Überwachen des Zielordners
-inotifywait -m -e create "$TARGET" | while read FILE
+inotifywait -m -e create "$TARGET" | while read -r directory event file
 do
     # Extrahieren des Dateinamens aus der Ausgabe von inotifywait
-    file=$(echo "$FILE" | awk '{print $3}')
+    #echo "DEBUG: $directory"
+	#echo "DEBUG: $event"
+	#echo "DEBUG: $file"
+	#file=$(echo "$file" | awk '{print $3}')
     # Verarbeitung der neuen PDF-Datei
     process_pdf "$file"
 done
