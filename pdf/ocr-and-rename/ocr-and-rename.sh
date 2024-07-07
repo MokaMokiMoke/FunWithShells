@@ -1,5 +1,13 @@
 #!/bin/bash
 
+################################################################################
+# Script Name: ocr-and-rename.sh
+# Author: Maximilian Fries (maxfries(at)t-online.de)
+# Date: 07.07.2024 (dd-mm-yyyy)
+# Purpose: This script reads PDF files and renames them.
+# Version: 0.8.1
+################################################################################
+
 # Modes: --file or --folder
 # Setze den Standardwert für MODE auf "--folder" und für TARGET auf das aktuelle Verzeichnis, falls keine Parameter angegeben sind
 MODE="--folder"
